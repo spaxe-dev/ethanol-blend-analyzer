@@ -89,3 +89,16 @@ void Display::showError(const char* line1, const char* line2) {
   oled.println(line2);
   oled.display();
 }
+
+// test/hx711-oled: raw HX711 readout. No grams, no calibration.
+void Display::showRaw(int32_t raw, bool hx_ok) {
+  if (!healthy_) return;
+  header("HX711 RAW");
+  oled.setTextSize(2);
+  oled.setCursor(0, 30);
+  oled.println(raw);
+  oled.setTextSize(1);
+  oled.print(F("HX711: "));
+  oled.println(hx_ok ? F("OK") : F("ERROR"));
+  oled.display();
+}
