@@ -46,6 +46,18 @@
 #define TEMP_SAMPLING_INTERVAL_MS 2000
 
 // ---------- HX711 / Y2C131 ----------
+// VERIFIED WORKING WIRING (bench-tested, raw counts respond to force):
+//   HX711 VCC -> ESP32 3V3 (measured stable 3.3V), GND -> GND
+//   HX711 DT  -> GPIO16, SCK -> GPIO17
+//   Load cell RED   -> E+
+//   Load cell BLACK -> E-
+//   Load cell GREEN -> A-   (NOT A+: polarity reversed vs initial assumption)
+//   Load cell WHITE -> A+   (NOT A-: polarity reversed vs initial assumption)
+//   B+ / B- -> unused (A channel only)
+// NOTE: initial mapping GREEN->A+ / WHITE->A- produced garbage raw
+// (0, -1, random ~16000). Cell itself verified healthy by resistance:
+// RED-BLACK 990, GREEN-WHITE 989, all cross-pairs ~742-743 ohms;
+// E+ to E- measured ~2.7V. Only the A-channel polarity swap fixed it.
 #define HX711_DOUT_PIN 16
 #define HX711_SCK_PIN 17
 #define HX711_SAMPLING_INTERVAL_MS 250

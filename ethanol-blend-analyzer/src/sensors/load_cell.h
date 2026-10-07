@@ -1,4 +1,8 @@
 // load_cell.h — HX711 + Y2C131 driver (Phase 1)
+//
+// VERIFIED WIRING (see config.h): RED->E+, BLACK->E-, GREEN->A-, WHITE->A+.
+// A-channel polarity is reversed relative to the naive color mapping;
+// GREEN->A+ / WHITE->A- yields garbage raw (0/-1). Do NOT "fix" it back.
 
 #pragma once
 
