@@ -7,6 +7,16 @@
 #include "electrical/measurement.h"
 #include "electrical/signal_generator.h"
 #include "calibration/lookup.h"
+
+static LinFit g_fit;
+static bool g_fit_done = false;
+
+static void ensureFit() {
+  if (!g_fit_done) {
+    modelFit(g_fit);
+    g_fit_done = true;
+  }
+}
 #include "sensors/temperature.h"
 #include "sensors/load_cell.h"
 #include "sensors/adc.h"
@@ -50,6 +60,7 @@ void SerialProtocol::printHelp() {
   Serial.println(F("#   sig [hz|on|off] - excitation state / set freq / enable / disable"));
   Serial.println(F("#   sig blink     - 6x slow toggle on GPIO26 (find pin w/ meter)"));
   Serial.println(F("#   predict       - fresh estimate from lookup table"));
+  Serial.println(F("#   model         - linear fit over table rows + residuals"));
 }
 
 String SerialProtocol::readLine() {
@@ -255,18 +266,39 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
     if (!adc.isHealthy()) {
       Serial.println(F("# ads1115 NOT PRESENT"));
     } else {
+      ensureFit();
       AdcStats s = adc.readStats(ADS1115_TEST_CHANNEL, 48);
       float pct = lookupAddedEthanol(s.maxv);
+      float reg = regressAddedEthanol(s.maxv, g_fit);
       Serial.print(F("# predict max="));
       Serial.print(s.maxv);
-      Serial.print(F(" added_ethanol_pct="));
+      Serial.print(F(" table_pct="));
       if (!isnan(pct)) {
         Serial.print(pct, 1);
-        Serial.print(F(" (4PT table, base=market petrol)"));
       } else {
         Serial.print(F("OUT-OF-RANGE"));
       }
-      Serial.println();
+      Serial.print(F(" regress_pct="));
+      if (!isnan(reg)) {
+        Serial.print(reg, 1);
+      } else {
+        Serial.print(F("OUT-OF-RANGE"));
+      }
+      Serial.println(F(" (6PT table, base=market petrol)"));
+    }
+  } else if (cmd == "model") {
+    ensureFit();
+    Serial.print(F("# model rows="));
+    Serial.print(lookupRowCount());
+    if (g_fit.fitted) {
+      Serial.print(F(" slope="));
+      Serial.print(g_fit.slope, 6);
+      Serial.print(F(" intercept="));
+      Serial.print(g_fit.intercept, 2);
+      Serial.print(F(" max_residual_pct="));
+      Serial.println(g_fit.max_residual, 2);
+    } else {
+      Serial.println(F(" FIT FAILED"));
     }
   } else {
     Serial.println(F("# unknown command; type 'help'"));

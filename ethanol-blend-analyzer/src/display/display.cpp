@@ -117,6 +117,6 @@ void Display::showEstimate(float added_pct, bool valid, float resp_v,
     oled.print(F("--"));
   }
   oled.println(F("C"));
-  oled.println(F("CAL:4PT BASE=MKT"));
+  oled.println(F("CAL:6PT BASE=MKT"));
   oled.display();
 }
