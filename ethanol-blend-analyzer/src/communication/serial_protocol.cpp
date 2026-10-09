@@ -231,7 +231,7 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
         Serial.print(f, 1);
         Serial.println(F(" Hz"));
       } else {
-        Serial.println(F("# usage: sig [1..1000 | on | off]"));
+        Serial.println(F("# usage: sig [5..1000 | on | off]"));
       }
     }
   } else {

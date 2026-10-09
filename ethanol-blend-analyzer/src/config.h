@@ -89,7 +89,9 @@
 #define SIGGEN_ENABLED true
 #define SIGGEN_PIN 26             // free, non-strapping; DAC-capable for later sine work
 #define SIGGEN_LEDC_CHANNEL 0
-#define SIGGEN_LEDC_RES_BITS 10   // 50% duty = 512
+// 14-bit: LEDC divider stays in hardware range (<=1023) for 5..1000 Hz.
+// (10-bit cannot make 20 Hz: divider 3906 exceeds the max 1023.)
+#define SIGGEN_LEDC_RES_BITS 14   // 50% duty = 8192
 #define SIGGEN_DEFAULT_FREQ_HZ 20.0f
-#define SIGGEN_MIN_FREQ_HZ 1.0f
+#define SIGGEN_MIN_FREQ_HZ 5.0f
 #define SIGGEN_MAX_FREQ_HZ 1000.0f
