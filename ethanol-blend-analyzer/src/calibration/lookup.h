@@ -39,3 +39,8 @@ struct LinFit {
 
 void modelFit(LinFit& f);
 float regressAddedEthanol(int16_t adc_max, const LinFit& f);
+
+// Coarse bucket label for display: nearest reference row within tolerance,
+// else the bracketing range. Never invents precision the data can't hold.
+// Writes e.g. "LIKELY E20" or "E10-E20" into buf (bufsz >= 12).
+void bucketLabel(float added_pct, char* buf, size_t bufsz);

@@ -3,6 +3,7 @@
 #include "display/display.h"
 #include "config.h"
 #include "electrical/measurement.h"
+#include "calibration/lookup.h"
 
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -94,29 +95,35 @@ void Display::showError(const char* line1, const char* line2) {
 void Display::showEstimate(float added_pct, bool valid, float resp_v,
                            float temp_c, bool temp_valid) {
   if (!healthy_) return;
+  char bucket[12];
+  if (valid) {
+    bucketLabel(added_pct, bucket, sizeof(bucket));
+  } else {
+    snprintf(bucket, sizeof(bucket), "NO READING");
+  }
   oled.clearDisplay();
   oled.setTextSize(1);
   oled.setTextColor(SSD1306_WHITE);
   oled.setCursor(0, 0);
   oled.println(F("ETHANOLBLEND"));
   oled.setTextSize(2);
-  if (valid) {
-    oled.print(F("+"));
-    oled.print(added_pct, 1);
-    oled.println(F(" %"));
-  } else {
-    oled.println(F("--.- %"));
-  }
+  oled.println(bucket);
   oled.setTextSize(1);
-  oled.print(F("R"));
+  oled.print(F("+"));
+  if (valid) {
+    oled.print(added_pct, 1);
+  } else {
+    oled.print(F("--.-"));
+  }
+  oled.print(F("% R"));
   oled.print(resp_v, 2);
-  oled.print(F("V T"));
+  oled.print(F(" T"));
   if (temp_valid) {
-    oled.print(temp_c, 1);
+    oled.print(temp_c, 0);
   } else {
     oled.print(F("--"));
   }
-  oled.println(F("C"));
+  oled.println();
   oled.println(F("CAL:6PT BASE=MKT"));
   oled.display();
 }

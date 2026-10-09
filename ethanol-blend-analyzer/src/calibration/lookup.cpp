@@ -59,3 +59,35 @@ float regressAddedEthanol(int16_t adc_max, const LinFit& f) {
   if (!f.fitted || adc_max < 1000) return NAN;
   return f.slope * adc_max + f.intercept;
 }
+
+void bucketLabel(float added_pct, char* buf, size_t bufsz) {
+  // Reference blends we actually tabled; tolerance = claimed +/-5 pts.
+  static const float REFS[] = { 0.0f, 9.0f, 17.0f, 23.0f, 29.0f, 33.0f };
+  static const uint8_t NREFS = sizeof(REFS) / sizeof(REFS[0]);
+  if (isnan(added_pct)) {
+    snprintf(buf, bufsz, "NO READING");
+    return;
+  }
+  uint8_t best = 0;
+  for (uint8_t i = 1; i < NREFS; i++) {
+    if (fabsf(added_pct - REFS[i]) < fabsf(added_pct - REFS[best])) best = i;
+  }
+  if (fabsf(added_pct - REFS[best]) <= 5.0f) {
+    snprintf(buf, bufsz, "LIKELY E%d", (int)(REFS[best] + 0.5f));
+    return;
+  }
+  // Between references: name the bracket low-high.
+  uint8_t lo = best, hi = best;
+  if (added_pct < REFS[best] && best > 0) {
+    lo = best - 1;
+    hi = best;
+  } else if (added_pct > REFS[best] && best + 1 < NREFS) {
+    lo = best;
+    hi = best + 1;
+  }
+  if (lo == hi) {
+    snprintf(buf, bufsz, added_pct < REFS[0] ? "BELOW E0" : "ABOVE E33");
+  } else {
+    snprintf(buf, bufsz, "E%d-E%d", (int)(REFS[lo] + 0.5f), (int)(REFS[hi] + 0.5f));
+  }
+}
