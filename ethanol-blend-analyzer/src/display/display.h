@@ -18,6 +18,8 @@ class Display {
   // Estimate screen: added-ethanol % interpolated from measured table.
   void showEstimate(float added_pct, bool valid, float resp_v,
                     float temp_c, bool temp_valid);
+  // Transient "working" indicator shown during the estimate burst.
+  void showBusy();
 
  private:
   void header(const char* title);

@@ -120,3 +120,13 @@ void Display::showEstimate(float added_pct, bool valid, float resp_v,
   oled.println(F("CAL:6PT BASE=MKT"));
   oled.display();
 }
+
+void Display::showBusy() {
+  if (!healthy_) return;
+  oled.clearDisplay();
+  oled.setTextSize(2);
+  oled.setTextColor(SSD1306_WHITE);
+  oled.setCursor(8, 24);
+  oled.println(F("MEASURING"));
+  oled.display();
+}

@@ -42,6 +42,7 @@ static float g_est_resp_v = 0.0f;
 
 static void runEstimator() {
   if (!g_ads_ok) return;
+  if (g_oled_ok) g_display.showBusy();
   AdcStats s = g_adc.readStats(ADS1115_TEST_CHANNEL, 48);
   if (!s.valid) {
     g_est_valid = false;
