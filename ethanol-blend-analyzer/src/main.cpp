@@ -79,7 +79,7 @@ void setup() {
   g_ads_ok = g_adc.begin();
   bool sig_ok = g_sig.begin();
   if (sig_ok) {
-    Serial.print(F("# SIG on: ESP32 LEDC square "));
+    Serial.print(F("# SIG on: ESP32 timer square "));
     Serial.print(g_sig.getFrequency(), 1);
     Serial.print(F(" Hz (timer actual "));
     Serial.print(g_sig.actualHz(), 1);

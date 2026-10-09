@@ -217,7 +217,7 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
       Serial.print(F("# sig freq_hz="));
       Serial.print(sig->getFrequency(), 1);
       Serial.print(sig->isEnabled() ? F(" ON") : F(" OFF"));
-      Serial.print(F(" src=ESP32-LEDC square 0..3.3V on GPIO"));
+      Serial.print(F(" src=ESP32-timer square 0..3.3V on GPIO"));
       Serial.println(SIGGEN_PIN);
     } else if (arg == "on") {
       sig->enable();
