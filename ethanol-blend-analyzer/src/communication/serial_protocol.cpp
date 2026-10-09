@@ -5,6 +5,7 @@
 #include "communication/serial_protocol.h"
 #include "config.h"
 #include "electrical/measurement.h"
+#include "electrical/signal_generator.h"
 #include "sensors/temperature.h"
 #include "sensors/load_cell.h"
 #include "sensors/adc.h"
@@ -45,6 +46,7 @@ void SerialProtocol::printHelp() {
   Serial.println(F("#   set_scale <f>   - set HX711 scale factor (needs known mass)"));
   Serial.println(F("#   adc [ch]        - read ADS1115 channel 0-3 (default 0)"));
   Serial.println(F("#   adc_stats [ch] [n] - mean/min/max/stddev over n samples"));
+  Serial.println(F("#   sig [hz|on|off] - excitation state / set freq / enable / disable"));
 }
 
 String SerialProtocol::readLine() {
@@ -81,7 +83,8 @@ void SerialProtocol::publishMeasurement(const Measurement& m) {
   Serial.print(F(",\"volume_ml\":null,\"density_g_ml\":null"));
   Serial.print(F(",\"excitation_frequency_hz\":"));
   Serial.print(m.excitation_frequency_hz, 1);
-  Serial.print(F(",\"excitation_frequency_verified\":false"));
+  Serial.print(F(",\"excitation_frequency_verified\":"));
+  Serial.print(m.excitation_frequency_verified ? F("true") : F("false"));
   Serial.print(F(",\"adc_channel\":"));
   Serial.print(m.adc_channel);
   Serial.print(F(",\"adc_raw\":"));
@@ -96,7 +99,8 @@ void SerialProtocol::publishMeasurement(const Measurement& m) {
   Serial.println(F("}"));
 }
 
-void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads1115Reader& adc) {
+void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads1115Reader& adc,
+                               SignalGenerator* sig) {
   if (!Serial.available()) return;
   String line = readLine();
   if (line.length() == 0) return;
@@ -204,6 +208,31 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
       Serial.print(s.stddev, 2);
       Serial.print(F(" volts_mean="));
       Serial.println(s.volts_mean, 4);
+    }
+  } else if (cmd == "sig") {
+    if (sig == nullptr) {
+      Serial.println(F("# no signal generator in this build"));
+    } else if (arg.length() == 0) {
+      Serial.print(F("# sig freq_hz="));
+      Serial.print(sig->getFrequency(), 1);
+      Serial.print(sig->isEnabled() ? F(" ON") : F(" OFF"));
+      Serial.print(F(" src=ESP32-LEDC square 0..3.3V on GPIO"));
+      Serial.println(SIGGEN_PIN);
+    } else if (arg == "on") {
+      sig->enable();
+      Serial.println(F("# sig enabled"));
+    } else if (arg == "off") {
+      sig->disable();
+      Serial.println(F("# sig disabled (pin parked at 0V)"));
+    } else {
+      float f = arg.toFloat();
+      if (sig->setFrequency(f)) {
+        Serial.print(F("# sig freq set to "));
+        Serial.print(f, 1);
+        Serial.println(F(" Hz"));
+      } else {
+        Serial.println(F("# usage: sig [1..1000 | on | off]"));
+      }
     }
   } else {
     Serial.println(F("# unknown command; type 'help'"));

@@ -8,12 +8,14 @@ struct Measurement;
 class TemperatureSensor;
 class LoadCell;
 class Ads1115Reader;
+class SignalGenerator;
 
 class SerialProtocol {
  public:
   void begin(unsigned long baud);
   // Call every loop with live driver refs; handles incoming commands.
-  void handleCommands(TemperatureSensor& temp, LoadCell& load, Ads1115Reader& adc);
+  void handleCommands(TemperatureSensor& temp, LoadCell& load, Ads1115Reader& adc,
+                      SignalGenerator* sig = nullptr);
   // Machine-readable JSON Lines measurement (one line per call).
   void publishMeasurement(const Measurement& m);
   void printBootBanner();

@@ -8,6 +8,7 @@
 
 #include "config.h"
 #include "electrical/measurement.h"
+#include "electrical/signal_generator.h"
 #include "sensors/temperature.h"
 #include "sensors/load_cell.h"
 #include "sensors/adc.h"
@@ -17,6 +18,7 @@
 static TemperatureSensor g_temp;
 static LoadCell g_load;
 static Ads1115Reader g_adc;
+static Esp32PwmGenerator g_sig;
 static Display g_display;
 static SerialProtocol g_serial;
 static Measurement g_meas;
@@ -46,10 +48,10 @@ static void refreshMeasurement() {
   g_meas.volume_valid = false;   // no vessels in Phase 1
   g_meas.density_valid = false;  // cannot compute without volume
 
-  g_meas.excitation_frequency_hz = EXCITATION_FREQUENCY_HZ_APPROX;
-  g_meas.excitation_frequency_verified = false;
-  g_meas.excitation_amplitude = EXCITATION_AMPLITUDE_UNKNOWN;
-  g_meas.excitation_amplitude_known = false;
+  g_meas.excitation_frequency_hz = g_sig.getFrequency();
+  g_meas.excitation_frequency_verified = true;  // LEDC derives from crystal
+  g_meas.excitation_amplitude = g_sig.isEnabled() ? g_sig.sourceAmplitude() : 0.0f;
+  g_meas.excitation_amplitude_known = true;  // source-side, pre-divider square
 
   g_meas.adc_channel = ADS1115_TEST_CHANNEL;
   g_meas.adc_raw = g_adc.lastRaw();
@@ -75,6 +77,14 @@ void setup() {
   g_temp_ok = g_temp.begin();
   g_hx_ok = g_load.begin();
   g_ads_ok = g_adc.begin();
+  bool sig_ok = g_sig.begin();
+  if (sig_ok) {
+    Serial.print(F("# SIG on: ESP32 LEDC square "));
+    Serial.print(g_sig.getFrequency(), 1);
+    Serial.println(F(" Hz 0..3.3V on GPIO26 (stand-in until ICL8038)"));
+  } else {
+    Serial.println(F("# SIG generator disabled in this build"));
+  }
 
   g_serial.printStatus(g_temp.isHealthy(), g_load.isHealthy(), g_adc.isHealthy(), g_oled_ok);
   Serial.println(F("# HX711 grams UNCALIBRATED until set_scale with known mass"));
@@ -93,7 +103,7 @@ void loop() {
   unsigned long now = millis();
 
   // 1. Serial commands (always responsive).
-  g_serial.handleCommands(g_temp, g_load, g_adc);
+  g_serial.handleCommands(g_temp, g_load, g_adc, &g_sig);
 
   // 2. Sensor updates (each throttled internally, non-blocking).
   g_temp.update();

@@ -60,7 +60,9 @@
 // Absolute input limit is then ~GND-0.3V .. VDD+0.3V (~3.6V max). NEVER feed 5V.
 #define ADS1115_I2C_ADDRESS 0x48  // ADDR pin tied to GND
 #define ADS1115_GAIN GAIN_ONE     // +/-4.096V full-scale; LSB = 125uV. Safe default.
-#define ADS1115_DATARATE RATE_ADS1115_128SPS
+// 860 SPS on feat/esp32-excitation: resolves <=100 Hz excitation cycles
+// (43 samples/cycle at the 20 Hz default) for min/max capture.
+#define ADS1115_DATARATE RATE_ADS1115_860SPS
 #define ADS1115_SAMPLING_INTERVAL_MS 500
 #define ADS1115_TEST_CHANNEL 0     // Phase-1 test channel (A0 vs GND)
 #define ADS1115_AVG_SAMPLES 16    // averaging for stats
@@ -79,3 +81,15 @@
 #define EXCITATION_FREQUENCY_HZ_APPROX 1000.0f
 // Amplitude unknown until analog front-end is characterized. -1 = unknown.
 #define EXCITATION_AMPLITUDE_UNKNOWN -1.0f
+
+// ---------- Signal generator (feat/esp32-excitation: ESP32 stand-in source) ----------
+// ESP32 LEDC square wave on a free GPIO until the ICL8038 module arrives.
+// Chosen so the ADS1115 (860 SPS here) fully resolves each cycle at default.
+// Square 0..3.3V rail; cell-side amplitude depends on the external divider.
+#define SIGGEN_ENABLED true
+#define SIGGEN_PIN 26             // free, non-strapping; DAC-capable for later sine work
+#define SIGGEN_LEDC_CHANNEL 0
+#define SIGGEN_LEDC_RES_BITS 10   // 50% duty = 512
+#define SIGGEN_DEFAULT_FREQ_HZ 20.0f
+#define SIGGEN_MIN_FREQ_HZ 1.0f
+#define SIGGEN_MAX_FREQ_HZ 1000.0f
