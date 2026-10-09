@@ -12,13 +12,14 @@ bool Esp32PwmGenerator::begin() {
   begin_ok_ = false;
   return false;
 #else
-  ledcSetup(SIGGEN_LEDC_CHANNEL, (uint32_t)freq_hz_, SIGGEN_LEDC_RES_BITS);
+  // ledcSetup returns the frequency the timer actually accepted (0 = rejected).
+  actual_hz_ = ledcSetup(SIGGEN_LEDC_CHANNEL, (uint32_t)freq_hz_, SIGGEN_LEDC_RES_BITS);
   // 50% duty for the square wave.
   ledcWrite(SIGGEN_LEDC_CHANNEL, (1u << SIGGEN_LEDC_RES_BITS) / 2);
   ledcAttachPin(SIGGEN_PIN, SIGGEN_LEDC_CHANNEL);
-  begin_ok_ = true;
-  enabled_ = true;
-  return true;
+  begin_ok_ = (actual_hz_ > 0.0);
+  enabled_ = begin_ok_;
+  return begin_ok_;
 #endif
 }
 

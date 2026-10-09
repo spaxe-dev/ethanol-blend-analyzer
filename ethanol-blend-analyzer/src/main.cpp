@@ -81,9 +81,11 @@ void setup() {
   if (sig_ok) {
     Serial.print(F("# SIG on: ESP32 LEDC square "));
     Serial.print(g_sig.getFrequency(), 1);
-    Serial.println(F(" Hz 0..3.3V on GPIO26 (stand-in until ICL8038)"));
+    Serial.print(F(" Hz (timer actual "));
+    Serial.print(g_sig.actualHz(), 1);
+    Serial.println(F(" Hz) 0..3.3V on GPIO26 (stand-in until ICL8038)"));
   } else {
-    Serial.println(F("# SIG generator disabled in this build"));
+    Serial.println(F("# SIG FAILED: timer rejected config (see actual=0)"));
   }
 
   g_serial.printStatus(g_temp.isHealthy(), g_load.isHealthy(), g_adc.isHealthy(), g_oled_ok);

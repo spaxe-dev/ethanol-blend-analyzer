@@ -34,9 +34,12 @@ class Esp32PwmGenerator : public SignalGenerator {
   void disable() override;
   bool isEnabled() const override { return enabled_; }
   float sourceAmplitude() const override { return 3.3f; }
+  // Frequency the LEDC timer actually accepted (0 = rejected by hardware).
+  double actualHz() const { return actual_hz_; }
 
  private:
   float freq_hz_ = SIGGEN_DEFAULT_FREQ_HZ;
+  double actual_hz_ = 0.0;
   bool enabled_ = false;
   bool begin_ok_ = false;
 };

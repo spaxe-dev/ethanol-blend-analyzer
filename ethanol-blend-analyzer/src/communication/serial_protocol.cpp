@@ -47,6 +47,7 @@ void SerialProtocol::printHelp() {
   Serial.println(F("#   adc [ch]        - read ADS1115 channel 0-3 (default 0)"));
   Serial.println(F("#   adc_stats [ch] [n] - mean/min/max/stddev over n samples"));
   Serial.println(F("#   sig [hz|on|off] - excitation state / set freq / enable / disable"));
+  Serial.println(F("#   sig blink     - 6x slow toggle on GPIO26 (find pin w/ meter)"));
 }
 
 String SerialProtocol::readLine() {
@@ -224,6 +225,19 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
     } else if (arg == "off") {
       sig->disable();
       Serial.println(F("# sig disabled (pin parked at 0V)"));
+    } else if (arg == "blink") {
+      // Debug: slow 6x toggle so a multimeter can find the real pin.
+      Serial.println(F("# blink: 6x 0.5s on GPIO26 — meter it now"));
+      sig->disable();
+      pinMode(SIGGEN_PIN, OUTPUT);
+      for (int i = 0; i < 6; i++) {
+        digitalWrite(SIGGEN_PIN, HIGH);
+        delay(500);
+        digitalWrite(SIGGEN_PIN, LOW);
+        delay(500);
+      }
+      sig->enable();
+      Serial.println(F("# blink done, sig re-enabled"));
     } else {
       float f = arg.toFloat();
       if (sig->setFrequency(f)) {
