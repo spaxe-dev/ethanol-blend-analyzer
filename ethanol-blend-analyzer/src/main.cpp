@@ -9,6 +9,7 @@
 #include "config.h"
 #include "electrical/measurement.h"
 #include "electrical/signal_generator.h"
+#include "calibration/lookup.h"
 #include "sensors/temperature.h"
 #include "sensors/load_cell.h"
 #include "sensors/adc.h"
@@ -31,7 +32,26 @@ static bool g_ads_ok = false;
 static unsigned long g_last_display_ms = 0;
 static unsigned long g_last_publish_ms = 0;
 static unsigned long g_last_status_ms = 0;
+static unsigned long g_last_est_ms = 0;
 static bool g_status_shown = false;
+
+// Estimate state: refreshed by the estimator task, shown + published.
+static float g_est_pct = NAN;
+static bool g_est_valid = false;
+static float g_est_resp_v = 0.0f;
+
+static void runEstimator() {
+  if (!g_ads_ok) return;
+  AdcStats s = g_adc.readStats(ADS1115_TEST_CHANNEL, 48);
+  if (!s.valid) {
+    g_est_valid = false;
+    return;
+  }
+  g_est_resp_v = s.volts_mean;
+  float pct = lookupAddedEthanol(s.maxv);
+  g_est_valid = !isnan(pct);
+  g_est_pct = pct;
+}
 
 static void refreshMeasurement() {
   g_meas.timestamp_ms = millis();
@@ -58,7 +78,8 @@ static void refreshMeasurement() {
   g_meas.adc_voltage = g_adc.lastVolts();
   g_meas.adc_valid = g_adc.hasValid();
 
-  g_meas.electrical_valid = false;  // NOT IMPLEMENTED in Phase 1
+  g_meas.electrical_response = g_est_valid ? g_est_resp_v : 0.0f;
+  g_meas.electrical_valid = g_est_valid;
 }
 
 void setup() {
@@ -112,6 +133,12 @@ void loop() {
   g_load.update();
   g_adc.update();
 
+  // Estimator: 48-sample burst + table lookup every 5 s (~0.5 s blocking).
+  if (now - g_last_est_ms >= 5000) {
+    g_last_est_ms = now;
+    runEstimator();
+  }
+
   refreshMeasurement();
 
   // 3. Display refresh at 1 Hz.
@@ -124,7 +151,8 @@ void loop() {
                                    g_adc.isHealthy(), g_oled_ok);
         g_status_shown = true;
       } else if (g_status_shown) {
-        g_display.showMeasurement(g_meas);
+        g_display.showEstimate(g_est_pct, g_est_valid, g_est_resp_v,
+                               g_meas.temperature_c, g_meas.temperature_valid);
       }
     }
   }

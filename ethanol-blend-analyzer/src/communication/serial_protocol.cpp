@@ -6,6 +6,7 @@
 #include "config.h"
 #include "electrical/measurement.h"
 #include "electrical/signal_generator.h"
+#include "calibration/lookup.h"
 #include "sensors/temperature.h"
 #include "sensors/load_cell.h"
 #include "sensors/adc.h"
@@ -48,6 +49,7 @@ void SerialProtocol::printHelp() {
   Serial.println(F("#   adc_stats [ch] [n] - mean/min/max/stddev over n samples"));
   Serial.println(F("#   sig [hz|on|off] - excitation state / set freq / enable / disable"));
   Serial.println(F("#   sig blink     - 6x slow toggle on GPIO26 (find pin w/ meter)"));
+  Serial.println(F("#   predict       - fresh estimate from lookup table"));
 }
 
 String SerialProtocol::readLine() {
@@ -96,7 +98,8 @@ void SerialProtocol::publishMeasurement(const Measurement& m) {
   }
   Serial.print(F(",\"adc_voltage\":"));
   printJsonFloatOrNull(m.adc_voltage, m.adc_valid, 4);
-  Serial.print(F(",\"electrical_response\":null"));
+  Serial.print(F(",\"electrical_response\":"));
+  printJsonFloatOrNull(m.electrical_response, m.electrical_valid, 4);
   Serial.println(F("}"));
 }
 
@@ -247,6 +250,23 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
       } else {
         Serial.println(F("# usage: sig [5..1000 | on | off]"));
       }
+    }
+  } else if (cmd == "predict") {
+    if (!adc.isHealthy()) {
+      Serial.println(F("# ads1115 NOT PRESENT"));
+    } else {
+      AdcStats s = adc.readStats(ADS1115_TEST_CHANNEL, 48);
+      float pct = lookupAddedEthanol(s.maxv);
+      Serial.print(F("# predict max="));
+      Serial.print(s.maxv);
+      Serial.print(F(" added_ethanol_pct="));
+      if (!isnan(pct)) {
+        Serial.print(pct, 1);
+        Serial.print(F(" (4PT table, base=market petrol)"));
+      } else {
+        Serial.print(F("OUT-OF-RANGE"));
+      }
+      Serial.println();
     }
   } else {
     Serial.println(F("# unknown command; type 'help'"));

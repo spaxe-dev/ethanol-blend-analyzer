@@ -15,6 +15,9 @@ class Display {
   void showSensorStatus(bool temp_ok, bool hx_ok, bool ads_ok, bool oled_ok);
   void showMeasurement(const Measurement& m);
   void showError(const char* line1, const char* line2);
+  // Estimate screen: added-ethanol % interpolated from measured table.
+  void showEstimate(float added_pct, bool valid, float resp_v,
+                    float temp_c, bool temp_valid);
 
  private:
   void header(const char* title);

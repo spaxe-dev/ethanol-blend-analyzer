@@ -89,3 +89,34 @@ void Display::showError(const char* line1, const char* line2) {
   oled.println(line2);
   oled.display();
 }
+
+// Estimate from the measured lookup table (added-% over market-petrol base).
+void Display::showEstimate(float added_pct, bool valid, float resp_v,
+                           float temp_c, bool temp_valid) {
+  if (!healthy_) return;
+  oled.clearDisplay();
+  oled.setTextSize(1);
+  oled.setTextColor(SSD1306_WHITE);
+  oled.setCursor(0, 0);
+  oled.println(F("ETHANOLBLEND"));
+  oled.setTextSize(2);
+  if (valid) {
+    oled.print(F("+"));
+    oled.print(added_pct, 1);
+    oled.println(F(" %"));
+  } else {
+    oled.println(F("--.- %"));
+  }
+  oled.setTextSize(1);
+  oled.print(F("R"));
+  oled.print(resp_v, 2);
+  oled.print(F("V T"));
+  if (temp_valid) {
+    oled.print(temp_c, 1);
+  } else {
+    oled.print(F("--"));
+  }
+  oled.println(F("C"));
+  oled.println(F("CAL:4PT BASE=MKT"));
+  oled.display();
+}
