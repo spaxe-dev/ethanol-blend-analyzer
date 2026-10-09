@@ -120,6 +120,38 @@ void setup() {
   }
 
   measurement_begin_unpopulated(g_meas);
+
+  pinMode(EST_BUTTON_PIN, INPUT_PULLUP);
+  Serial.println(F("# BTN: press GPIO13 button for instant reading"));
+}
+
+static int g_btn_last = HIGH;
+static unsigned long g_btn_low_ms = 0;
+
+// Active-low button: fires once on release after a 50 ms+ press.
+static void handleButton() {
+  int s = digitalRead(EST_BUTTON_PIN);
+  unsigned long now = millis();
+  if (s == LOW && g_btn_last == HIGH) {
+    g_btn_low_ms = now;
+  }
+  if (s == HIGH && g_btn_last == LOW && now - g_btn_low_ms >= 50) {
+    runEstimator();
+    refreshMeasurement();
+    if (g_oled_ok) {
+      g_display.showEstimate(g_est_pct, g_est_valid, g_est_resp_v,
+                             g_meas.temperature_c, g_meas.temperature_valid);
+    }
+    Serial.print(F("# BTN estimate_pct="));
+    if (g_est_valid) {
+      Serial.print(g_est_pct, 1);
+    } else {
+      Serial.print(F("INVALID"));
+    }
+    Serial.println();
+    g_last_est_ms = now;  // resync auto-estimator
+  }
+  g_btn_last = s;
 }
 
 void loop() {
@@ -127,6 +159,9 @@ void loop() {
 
   // 1. Serial commands (always responsive).
   g_serial.handleCommands(g_temp, g_load, g_adc, &g_sig);
+
+  // 1b. Measure button (instant estimate on release).
+  handleButton();
 
   // 2. Sensor updates (each throttled internally, non-blocking).
   g_temp.update();

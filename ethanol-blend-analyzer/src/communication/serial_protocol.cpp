@@ -241,15 +241,20 @@ void SerialProtocol::handleCommands(TemperatureSensor& temp, LoadCell& load, Ads
       Serial.println(F("# sig disabled (pin parked at 0V)"));
     } else if (arg == "blink") {
       // Debug: slow 6x toggle so a multimeter can find the real pin.
-      Serial.println(F("# blink: 6x 0.5s on GPIO26 — meter it now"));
+      // Toggles SIGGEN_PIN and EST_BUTTON_PIN together.
+      Serial.println(F("# blink: 6x 0.5s on GPIO26+GPIO13 — meter now"));
       sig->disable();
       pinMode(SIGGEN_PIN, OUTPUT);
+      pinMode(EST_BUTTON_PIN, OUTPUT);
       for (int i = 0; i < 6; i++) {
         digitalWrite(SIGGEN_PIN, HIGH);
+        digitalWrite(EST_BUTTON_PIN, HIGH);
         delay(500);
         digitalWrite(SIGGEN_PIN, LOW);
+        digitalWrite(EST_BUTTON_PIN, LOW);
         delay(500);
       }
+      pinMode(EST_BUTTON_PIN, INPUT_PULLUP);
       sig->enable();
       Serial.println(F("# blink done, sig re-enabled"));
     } else {

@@ -67,6 +67,12 @@
 #define ADS1115_TEST_CHANNEL 0     // Phase-1 test channel (A0 vs GND)
 #define ADS1115_AVG_SAMPLES 16    // averaging for stats
 
+// ---------- Measure button (feat/esp32-excitation demo control) ----------
+// Tactile button (or two touch-wires): one side -> EST_BUTTON_PIN row,
+// other side -> GND rail. Internal pull-up, no resistor needed.
+// Press = immediate estimate burst + OLED refresh + serial result line.
+#define EST_BUTTON_PIN 13
+
 // ---------- Measurement / UI timing ----------
 #define DISPLAY_REFRESH_INTERVAL_MS 1000
 #define MEASUREMENT_PUBLISH_INTERVAL_MS 2000
