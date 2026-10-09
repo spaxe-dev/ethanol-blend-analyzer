@@ -109,6 +109,10 @@ void Display::showEstimate(float added_pct, bool valid, float resp_v,
   oled.setTextColor(SSD1306_BLACK);
   oled.setCursor(22, 1);
   oled.print(F("ETHANOLBLEND"));
+  // Heartbeat: blinking block proves the screen is live every second.
+  if ((millis() / 1000) % 2) {
+    oled.fillRect(119, 1, 7, 7, SSD1306_BLACK);
+  }
   oled.setTextColor(SSD1306_WHITE);
   // Bucket, big.
   oled.setTextSize(2);
