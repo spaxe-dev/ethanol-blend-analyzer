@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1280" viewBox="0 0 1700 1280" font-family="Arial, Helvetica, sans-serif">
+<rect width="1700" height="1280" fill="#ffffff" />
+<rect x="16" y="16" width="1668" height="1248" rx="0" ry="0" fill="none" stroke="#111111" stroke-width="2.5" />
+<text x="70" y="96" font-size="38" font-weight="700" text-anchor="start" fill="#111111">ETHANOLBLEND</text>
+<text x="70" y="126" font-size="19" font-weight="400" text-anchor="start" fill="#111111">Measurement schematic &#8212; ESP32 + ADS1115 conductivity probe</text>
+<text x="70" y="150" font-size="15" font-weight="400" text-anchor="start" fill="#555555">20 Hz square excitation &#183; single-ended ADC &#183; 6-point empirical calibration</text>
+<text x="70" y="170" font-size="13" font-weight="400" text-anchor="start" fill="#8a8a8a">Rev feat/esp32-excitation @ c335b5f &#183; 2026-11-01 &#183; sheet 1/1</text>
+<line x1="70" y1="184" x2="1630" y2="184" stroke="#111111" stroke-width="2" />
+<rect x="90" y="195" width="270" height="660" rx="5" ry="5" fill="#ffffff" stroke="#111111" stroke-width="3" />
+<text x="112" y="232" font-size="24" font-weight="700" text-anchor="start" fill="#111111">ESP32</text>
+<text x="112" y="254" font-size="13" font-weight="400" text-anchor="start" fill="#555555">DevKit V1 &#183; 30-pin &#183; 3.3 V logic</text>
+<text x="112" y="806" font-size="12" font-weight="400" text-anchor="start" fill="#555555">Powered from USB 5 V</text>
+<text x="112" y="824" font-size="12" font-weight="400" text-anchor="start" fill="#555555">EN pin: not connected</text>
+<line x1="360" y1="300" x2="400" y2="300" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="305" font-size="15" font-weight="400" text-anchor="end" fill="#111111">3V3</text>
+<line x1="400" y1="300" x2="400" y2="284" stroke="#111111" stroke-width="2.5" />
+<line x1="387" y1="284" x2="413" y2="284" stroke="#111111" stroke-width="2.5" />
+<text x="400" y="276" font-size="13" font-weight="700" text-anchor="middle" fill="#111111">3V3</text>
+<line x1="360" y1="340" x2="400" y2="340" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="345" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GND</text>
+<line x1="400" y1="340" x2="400" y2="352" stroke="#111111" stroke-width="2.5" />
+<line x1="381" y1="352" x2="419" y2="352" stroke="#111111" stroke-width="2.5" />
+<line x1="388" y1="358" x2="412" y2="358" stroke="#111111" stroke-width="2.5" />
+<line x1="395" y1="364" x2="405" y2="364" stroke="#111111" stroke-width="2.5" />
+<line x1="360" y1="410" x2="400" y2="410" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="415" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GPIO21</text>
+<text x="410" y="415" font-size="16" font-weight="700" text-anchor="start" fill="#111111">SDA</text>
+<line x1="360" y1="450" x2="400" y2="450" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="455" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GPIO22</text>
+<text x="410" y="455" font-size="16" font-weight="700" text-anchor="start" fill="#111111">SCL</text>
+<line x1="360" y1="520" x2="400" y2="520" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="525" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GPIO4</text>
+<text x="410" y="525" font-size="16" font-weight="700" text-anchor="start" fill="#111111">DQ</text>
+<line x1="360" y1="600" x2="400" y2="600" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="605" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GPIO26</text>
+<text x="410" y="605" font-size="16" font-weight="700" text-anchor="start" fill="#111111">SIG</text>
+<line x1="360" y1="700" x2="400" y2="700" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="705" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GPIO13</text>
+<text x="410" y="705" font-size="16" font-weight="700" text-anchor="start" fill="#111111">BTN</text>
+<rect x="900" y="195" width="350" height="210" rx="5" ry="5" fill="#ffffff" stroke="#111111" stroke-width="3" />
+<text x="920" y="227" font-size="19" font-weight="700" text-anchor="start" fill="#111111">OLED 0.96&#8243; SSD1306</text>
+<text x="920" y="248" font-size="13" font-weight="400" text-anchor="start" fill="#555555">128 &#215; 64 &#183; I&#178;C 0x3C</text>
+<rect x="1140" y="268" width="88" height="52" rx="3" ry="3" fill="#111111" stroke="#111111" stroke-width="2.5" />
+<text x="1184" y="289" font-size="10" font-weight="700" text-anchor="middle" fill="#ffffff">LIKELY</text>
+<text x="1184" y="309" font-size="16" font-weight="700" text-anchor="middle" fill="#ffffff">E20</text>
+<line x1="900" y1="280" x2="860" y2="280" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="285" font-size="14" font-weight="400" text-anchor="start" fill="#111111">VCC</text>
+<line x1="860" y1="280" x2="860" y2="264" stroke="#111111" stroke-width="2.5" />
+<line x1="847" y1="264" x2="873" y2="264" stroke="#111111" stroke-width="2.5" />
+<text x="860" y="256" font-size="13" font-weight="700" text-anchor="middle" fill="#111111">3V3</text>
+<line x1="900" y1="314" x2="860" y2="314" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="319" font-size="14" font-weight="400" text-anchor="start" fill="#111111">GND</text>
+<line x1="860" y1="314" x2="860" y2="326" stroke="#111111" stroke-width="2.5" />
+<line x1="841" y1="326" x2="879" y2="326" stroke="#111111" stroke-width="2.5" />
+<line x1="848" y1="332" x2="872" y2="332" stroke="#111111" stroke-width="2.5" />
+<line x1="855" y1="338" x2="865" y2="338" stroke="#111111" stroke-width="2.5" />
+<line x1="900" y1="348" x2="860" y2="348" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="353" font-size="14" font-weight="400" text-anchor="start" fill="#111111">SDA</text>
+<text x="850" y="353" font-size="16" font-weight="700" text-anchor="end" fill="#111111">SDA</text>
+<line x1="900" y1="382" x2="860" y2="382" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="387" font-size="14" font-weight="400" text-anchor="start" fill="#111111">SCL</text>
+<text x="850" y="387" font-size="16" font-weight="700" text-anchor="end" fill="#111111">SCL</text>
+<rect x="900" y="440" width="350" height="250" rx="5" ry="5" fill="#ffffff" stroke="#111111" stroke-width="3" />
+<text x="920" y="472" font-size="20" font-weight="700" text-anchor="start" fill="#111111">ADS1115</text>
+<text x="920" y="493" font-size="13" font-weight="400" text-anchor="start" fill="#555555">16-bit &#916;&#931; ADC &#183; I&#178;C 0x48</text>
+<text x="1230" y="522" font-size="12" font-weight="400" text-anchor="end" fill="#555555">GAIN &#177;4.096 V</text>
+<text x="1230" y="542" font-size="12" font-weight="400" text-anchor="end" fill="#555555">RATE 860 SPS</text>
+<text x="1230" y="562" font-size="12" font-weight="400" text-anchor="end" fill="#555555">A1&#8211;A3 : NC</text>
+<line x1="900" y1="525" x2="860" y2="525" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="530" font-size="14" font-weight="400" text-anchor="start" fill="#111111">VDD</text>
+<line x1="860" y1="525" x2="860" y2="509" stroke="#111111" stroke-width="2.5" />
+<line x1="847" y1="509" x2="873" y2="509" stroke="#111111" stroke-width="2.5" />
+<text x="860" y="501" font-size="13" font-weight="700" text-anchor="middle" fill="#111111">3V3</text>
+<line x1="900" y1="559" x2="860" y2="559" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="564" font-size="14" font-weight="400" text-anchor="start" fill="#111111">GND</text>
+<line x1="860" y1="559" x2="860" y2="571" stroke="#111111" stroke-width="2.5" />
+<line x1="841" y1="571" x2="879" y2="571" stroke="#111111" stroke-width="2.5" />
+<line x1="848" y1="577" x2="872" y2="577" stroke="#111111" stroke-width="2.5" />
+<line x1="855" y1="583" x2="865" y2="583" stroke="#111111" stroke-width="2.5" />
+<line x1="900" y1="593" x2="860" y2="593" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="598" font-size="14" font-weight="400" text-anchor="start" fill="#111111">SDA</text>
+<text x="850" y="598" font-size="16" font-weight="700" text-anchor="end" fill="#111111">SDA</text>
+<line x1="900" y1="627" x2="860" y2="627" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="632" font-size="14" font-weight="400" text-anchor="start" fill="#111111">SCL</text>
+<text x="850" y="632" font-size="16" font-weight="700" text-anchor="end" fill="#111111">SCL</text>
+<line x1="900" y1="661" x2="860" y2="661" stroke="#111111" stroke-width="2.5" />
+<text x="912" y="666" font-size="14" font-weight="400" text-anchor="start" fill="#111111">ADDR</text>
+<line x1="860" y1="661" x2="860" y2="673" stroke="#111111" stroke-width="2.5" />
+<line x1="841" y1="673" x2="879" y2="673" stroke="#111111" stroke-width="2.5" />
+<line x1="848" y1="679" x2="872" y2="679" stroke="#111111" stroke-width="2.5" />
+<line x1="855" y1="685" x2="865" y2="685" stroke="#111111" stroke-width="2.5" />
+<text x="840" y="666" font-size="12" font-weight="400" text-anchor="end" fill="#555555">0x48</text>
+<line x1="1000" y1="690" x2="1000" y2="1040" stroke="#111111" stroke-width="2.5" />
+<text x="1012" y="762" font-size="16" font-weight="700" text-anchor="start" fill="#111111">A0</text>
+<text x="1012" y="780" font-size="12" font-weight="400" text-anchor="start" fill="#555555">sense node</text>
+<rect x="90" y="880" width="270" height="240" rx="5" ry="5" fill="#ffffff" stroke="#111111" stroke-width="3" />
+<text x="112" y="912" font-size="20" font-weight="700" text-anchor="start" fill="#111111">DS18B20</text>
+<text x="112" y="933" font-size="13" font-weight="400" text-anchor="start" fill="#555555">1-Wire &#183; 12-bit &#183; 2 s interval</text>
+<line x1="360" y1="960" x2="400" y2="960" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="965" font-size="15" font-weight="400" text-anchor="end" fill="#111111">VDD</text>
+<line x1="360" y1="1030" x2="400" y2="1030" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="1035" font-size="15" font-weight="400" text-anchor="end" fill="#111111">DQ</text>
+<line x1="360" y1="1100" x2="400" y2="1100" stroke="#111111" stroke-width="2.5" />
+<text x="348" y="1105" font-size="15" font-weight="400" text-anchor="end" fill="#111111">GND</text>
+<circle cx="400" cy="960" r="5.5" fill="#111111" />
+<line x1="400" y1="960" x2="400" y2="934" stroke="#111111" stroke-width="2.5" />
+<line x1="400" y1="934" x2="400" y2="918" stroke="#111111" stroke-width="2.5" />
+<line x1="387" y1="918" x2="413" y2="918" stroke="#111111" stroke-width="2.5" />
+<text x="400" y="910" font-size="13" font-weight="700" text-anchor="middle" fill="#111111">3V3</text>
+<line x1="400" y1="960" x2="460" y2="960" stroke="#111111" stroke-width="2.5" />
+<path d="M460 960 L460 968 L468 974.75 L452 988.25 L468 1001.75 L452 1015.25 L460 1022 L460 1030" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="460" y1="1030" x2="400" y2="1030" stroke="#111111" stroke-width="2.5" />
+<circle cx="400" cy="1030" r="5.5" fill="#111111" />
+<text x="482" y="992" font-size="13" font-weight="700" text-anchor="start" fill="#111111">4.7 k&#937;</text>
+<text x="482" y="1010" font-size="11" font-weight="400" text-anchor="start" fill="#555555">pull-up</text>
+<text x="408" y="1022" font-size="16" font-weight="700" text-anchor="start" fill="#111111">DQ</text>
+<line x1="400" y1="1100" x2="400" y2="1112" stroke="#111111" stroke-width="2.5" />
+<line x1="381" y1="1112" x2="419" y2="1112" stroke="#111111" stroke-width="2.5" />
+<line x1="388" y1="1118" x2="412" y2="1118" stroke="#111111" stroke-width="2.5" />
+<line x1="395" y1="1124" x2="405" y2="1124" stroke="#111111" stroke-width="2.5" />
+<text x="430" y="1180" font-size="16" font-weight="700" text-anchor="start" fill="#111111">BTN</text>
+<line x1="470" y1="1175" x2="500" y2="1175" stroke="#111111" stroke-width="2.5" />
+<circle cx="504" cy="1175" r="4" fill="#111111" />
+<circle cx="576" cy="1175" r="4" fill="#111111" />
+<line x1="518" y1="1157" x2="518" y2="1193" stroke="#111111" stroke-width="3" />
+<line x1="562" y1="1157" x2="562" y2="1193" stroke="#111111" stroke-width="3" />
+<line x1="513" y1="1148" x2="567" y2="1148" stroke="#111111" stroke-width="3" />
+<line x1="540" y1="1130" x2="540" y2="1148" stroke="#111111" stroke-width="3" />
+<text x="540" y="1122" font-size="12" font-weight="400" text-anchor="middle" fill="#555555">SW1</text>
+<line x1="580" y1="1175" x2="610" y2="1175" stroke="#111111" stroke-width="2.5" />
+<path d="M610 1175 L610 1196" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="610" y1="1196" x2="610" y2="1208" stroke="#111111" stroke-width="2.5" />
+<line x1="591" y1="1208" x2="629" y2="1208" stroke="#111111" stroke-width="2.5" />
+<line x1="598" y1="1214" x2="622" y2="1214" stroke="#111111" stroke-width="2.5" />
+<line x1="605" y1="1220" x2="615" y2="1220" stroke="#111111" stroke-width="2.5" />
+<text x="540" y="1222" font-size="11" font-weight="400" text-anchor="middle" fill="#555555">instant reading</text>
+<rect x="700" y="900" width="560" height="312" rx="3" ry="3" fill="#fcfcfc" stroke="#111111" stroke-width="2.5" stroke-dasharray="9 6" />
+<text x="718" y="928" font-size="14" font-weight="700" text-anchor="start" fill="#111111" letter-spacing="0.5">ELECTRODE CELL + EXCITATION DIVIDER</text>
+<text x="718" y="1045" font-size="15" font-weight="700" text-anchor="start" fill="#111111">SIG (GPIO26)</text>
+<line x1="830" y1="1040" x2="860" y2="1040" stroke="#111111" stroke-width="2.5" />
+<path d="M860 1040 L870 1040 L876.6666666666666 1049 L890.0 1031 L903.3333333333334 1049 L916.6666666666666 1031 L930.0 1049 L943.3333333333334 1031 L950 1040 L960 1040" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+<text x="905" y="1064" font-size="13" font-weight="700" text-anchor="middle" fill="#111111">10 k&#937;</text>
+<line x1="960" y1="1040" x2="1000" y2="1040" stroke="#111111" stroke-width="2.5" />
+<circle cx="1000" cy="1040" r="5.5" fill="#111111" />
+<text x="718" y="975" font-size="12" font-weight="400" text-anchor="start" fill="#555555">V_node = 3.3 V &#215; R_cell / (10 k&#937; + R_cell)</text>
+<text x="718" y="993" font-size="12" font-weight="400" text-anchor="start" fill="#555555">I_max = 330 &#956;A into the liquid</text>
+<text x="718" y="1011" font-size="12" font-weight="400" text-anchor="start" fill="#555555">A0 is bounded 0&#8211;3.3 V &#8212; no clamps</text>
+<path d="M1000 1040 L1000 1065 L970 1065 L970 1165" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="1035" y1="1075" x2="1035" y2="1165" stroke="#111111" stroke-width="3.5" />
+<path d="M1035 1075 L1105 1075 L1105 1102" fill="none" stroke="#111111" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" />
+<line x1="1105" y1="1102" x2="1105" y2="1114" stroke="#111111" stroke-width="2.5" />
+<line x1="1086" y1="1114" x2="1124" y2="1114" stroke="#111111" stroke-width="2.5" />
+<line x1="1093" y1="1120" x2="1117" y2="1120" stroke="#111111" stroke-width="2.5" />
+<line x1="1100" y1="1126" x2="1110" y2="1126" stroke="#111111" stroke-width="2.5" />
+<path d="M930 1090 L930 1150 Q930 1180 960 1180 L1040 1180 Q1070 1180 1070 1150 L1070 1090" fill="none" stroke="#111111" stroke-width="2.5" />
+<path d="M933 1122 L1067 1122 L1067 1148 Q1067 1177 1038 1177 L962 1177 Q933 1177 933 1148 Z" fill="#e6e6e6" />
+<line x1="933" y1="1122" x2="1067" y2="1122" stroke="#111111" stroke-width="2" />
+<text x="1000" y="1204" font-size="11" font-weight="400" text-anchor="middle" fill="#555555">fuel under test</text>
+<text x="956" y="1112" font-size="12" font-weight="700" text-anchor="end" fill="#111111">E1</text>
+<text x="1052" y="1112" font-size="12" font-weight="700" text-anchor="start" fill="#111111">E2</text>
+<rect x="1300" y="195" width="360" height="700" rx="3" ry="3" fill="#fcfcfc" stroke="#111111" stroke-width="2" />
+<text x="1322" y="228" font-size="17" font-weight="700" text-anchor="start" fill="#111111">DESIGN NOTES</text>
+<text x="1322" y="262" font-size="13" font-weight="700" text-anchor="start" fill="#111111">Excitation: 20 Hz, 0&#8211;3.3 V,</text>
+<text x="1322" y="288" font-size="13" font-weight="400" text-anchor="start" fill="#555555">50 % duty, GPIO26 hardware timer.</text>
+<text x="1322" y="340" font-size="13" font-weight="700" text-anchor="start" fill="#111111">Node voltage</text>
+<text x="1322" y="366" font-size="13" font-weight="400" text-anchor="start" fill="#555555">V_node = 3.3 &#215; R_cell / (10 k&#937; + R_cell)</text>
+<text x="1322" y="418" font-size="13" font-weight="700" text-anchor="start" fill="#111111">Max current into the liquid:</text>
+<text x="1322" y="444" font-size="13" font-weight="400" text-anchor="start" fill="#555555">3.3 V / 10 k&#937; = 330 &#956;A.</text>
+<text x="1322" y="496" font-size="13" font-weight="700" text-anchor="start" fill="#111111">A0 is bounded 0&#8211;3.3 V by</text>
+<text x="1322" y="522" font-size="13" font-weight="400" text-anchor="start" fill="#555555">construction &#8212; no clamps fitted.</text>
+<text x="1322" y="574" font-size="13" font-weight="700" text-anchor="start" fill="#111111">ADC: single-ended, &#177;4.096 V,</text>
+<text x="1322" y="600" font-size="13" font-weight="400" text-anchor="start" fill="#555555">860 SPS, 48-sample burst every 5 s.</text>
+<text x="1322" y="626" font-size="13" font-weight="400" text-anchor="start" fill="#555555">Lookup key = max of the burst.</text>
+<text x="1322" y="678" font-size="13" font-weight="700" text-anchor="start" fill="#111111">All logic 3.3 V. Never apply 5 V</text>
+<text x="1322" y="704" font-size="13" font-weight="400" text-anchor="start" fill="#555555">to ADS1115 inputs (abs max 3.6 V).</text>
+<text x="1322" y="756" font-size="13" font-weight="700" text-anchor="start" fill="#111111">Not fitted: HX711, load cell,</text>
+<text x="1322" y="782" font-size="13" font-weight="400" text-anchor="start" fill="#555555">ICL8038, LM358.</text>
+<text x="1322" y="834" font-size="13" font-weight="700" text-anchor="start" fill="#111111">Nets with the same name are joined.</text>
+<rect x="1300" y="920" width="360" height="320" rx="3" ry="3" fill="#fcfcfc" stroke="#111111" stroke-width="2" />
+<text x="1322" y="952" font-size="17" font-weight="700" text-anchor="start" fill="#111111">SYMBOL LEGEND</text>
+<circle cx="1338" cy="990" r="5.5" fill="#111111" />
+<text x="1372" y="995" font-size="12" font-weight="400" text-anchor="start" fill="#555555">connection (nets joined)</text>
+<line x1="1338" y1="1018" x2="1338" y2="1032" stroke="#111111" stroke-width="2.5" />
+<line x1="1320" y1="1032" x2="1356" y2="1032" stroke="#111111" stroke-width="2.5" />
+<line x1="1326" y1="1039" x2="1350" y2="1039" stroke="#111111" stroke-width="2.5" />
+<line x1="1332" y1="1046" x2="1344" y2="1046" stroke="#111111" stroke-width="2.5" />
+<text x="1372" y="1040" font-size="12" font-weight="400" text-anchor="start" fill="#555555">common ground (0 V)</text>
+<line x1="1338" y1="1082" x2="1338" y2="1068" stroke="#111111" stroke-width="2.5" />
+<line x1="1325" y1="1068" x2="1351" y2="1068" stroke="#111111" stroke-width="2.5" />
+<text x="1372" y="1082" font-size="12" font-weight="400" text-anchor="start" fill="#555555">3V3 rail</text>
+<line x1="1326" y1="1108" x2="1350" y2="1108" stroke="#111111" stroke-width="2.5" />
+<line x1="1345" y1="1103" x2="1355" y2="1113" stroke="#111111" stroke-width="2.5" />
+<line x1="1345" y1="1113" x2="1355" y2="1103" stroke="#111111" stroke-width="2.5" />
+<text x="1372" y="1113" font-size="12" font-weight="400" text-anchor="start" fill="#555555">no connect</text>
+<text x="1322" y="1142" font-size="13" font-weight="700" text-anchor="start" fill="#111111">SDA</text>
+<line x1="1360" y1="1138" x2="1400" y2="1138" stroke="#111111" stroke-width="2.5" />
+<text x="1408" y="1142" font-size="12" font-weight="400" text-anchor="start" fill="#555555">net label</text>
+<text x="1322" y="1172" font-size="11" font-weight="400" text-anchor="start" fill="#8a8a8a">Same net name = same electrical node.</text>
+</svg>
